@@ -215,6 +215,19 @@ if __name__ == "__main__":
 
     # Restart script as root
     if not os.geteuid() == 0:
+        # Get pactl info
+        mkdir("/tmp/eupnea-audio")
+        if path_exists("/usr/bin/pactl"):
+            pactl_info_tmp = bash("pactl info")  # pactl must run as not root
+
+        else:  # pactl might not always be installed => install it
+            print_status("pactl not found, Installing pulseaudio-utils")
+            update_system()
+            install_package("alsa-utils", "alsa-utils", "alsa-utils")
+            install_package("libpulse", "pulseaudio-utils", "pulseaudio-utils")
+            pactl_info_tmp = bash("pactl info")  # pactl must run as not root
+        with open("/tmp/eupnea-audio/pactl", "w") as file:
+            file.write(pactl_info_tmp)
         # save username
         with open("/tmp/username", "w") as file:
             # get non root username. os.getlogin() seems to fail in chroots
