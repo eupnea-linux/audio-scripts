@@ -68,7 +68,8 @@ def str_audio():
 def zen2_audio(username):
     print_status("Installing zen2 audio")
     update_system()
-    if not bash("ps -e").__contains__("pipewire"):  # Check if pipewire is running
+    # if not bash("ps -e").__contains__("pipewire") # it's a dependency of gnome so it's always running
+    if not bash("ps -e").__contains__("pipewire"):
         print_status("PipeWire is not running, installing it")
         if Path("/usr/bin/pacman").exists():
             # bash("pacman -S --noconfirm wireplumber")
@@ -79,8 +80,8 @@ def zen2_audio(username):
             bash(f"systemctl --machine={username}@.host --user enable pipewire.service")
             bash(f"systemctl --machine={username}@.host --user start pipewire.service")
             # Enable + start pipewire-pulse
-            bash(f"systemctl --machine={username}@.host --user enable pipwire-pulse.service")
-            bash(f"systemctl --machine={username}@.host --user start pipwire-pulse.service")
+            #bash(f"systemctl --machine={username}@.host --user enable pipwire-pulse.service")
+            #bash(f"systemctl --machine={username}@.host --user start pipwire-pulse.service")
             # bash(f"systemctl --machine={username}@.host --user --now enable wireplumber.service")  # enable wireplumber
 
         elif path_exists("/usr/bin/apt"):
