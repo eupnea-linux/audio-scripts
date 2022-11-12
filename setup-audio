@@ -69,7 +69,10 @@ def zen2_audio(username):
     print_status("Installing zen2 audio")
     update_system()
     # if not bash("ps -e").__contains__("pipewire") # it's a dependency of gnome so it's always running
-    if not bash("ps -e").__contains__("pipewire"):
+    with open("/tmp/eupnea-audio/pactl", "r") as file:
+        pactl = file.read()  # pactl was run at the start as non-root
+    rmfile("/tmp/eupnea-audio/pactl")
+    if not ("PipeWire" in pactl): 
         print_status("PipeWire is not running, installing it")
         if Path("/usr/bin/pacman").exists():
             # bash("pacman -S --noconfirm wireplumber")
