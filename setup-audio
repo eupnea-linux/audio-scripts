@@ -248,9 +248,9 @@ if __name__ == "__main__":
         print_warning("Verbosity increased")
         set_verbose(args.verbose)
 
-    # Remove old files
-    rmdir("/tmp/eupnea-audio")
-    mkdir("/tmp/eupnea-audio")
+    ## Remove old files
+    #rmdir("/tmp/eupnea-audio")
+    #mkdir("/tmp/eupnea-audio")
 
     # Important message
     print_warning("WARNING: this audio script is not fully functional yet!")
