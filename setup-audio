@@ -65,6 +65,11 @@ def str_audio():
     print_error("str audio not implemented yet")
 
 
+def bsw_audio():
+    print_status("Fixing braswell audio")
+    cpfile(f"{config_path}/audio/sof/bsw-sof.conf", "/etc/modprobe.d/bsw-sof.conf")
+
+
 def zen2_audio(username):
     print_status("Installing zen2 audio")
     update_system()
@@ -274,6 +279,8 @@ if __name__ == "__main__":
 
     try:
         match boards[device_board]:
+            case "bsw":
+                bsw_audio()
             case "skl":
                 avs_audio("skl")
             case "kbl":
